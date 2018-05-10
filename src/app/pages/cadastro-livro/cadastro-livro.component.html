@@ -1,0 +1,430 @@
+<h3>Cadastro de Livro</h3>
+<div class="panel panel-default">
+  <div class="tab-content panel-body">
+    <form cadastroLibro (ngSubmit)="onSubmit()" [formGroup]="livroDigitalGroup">
+      <div class="thumbnail col-sm-offset-1 col-xs-3 col-md-3" (mouseover)="trocaImagem()" (mouseout)="voltaImagem()">
+        <label class="control-label fonte-color">Capa<span id='spanObgt1' class="color-red"> *</span></label>
+        <div id="divBallonImagem">
+          <img [src]="imagem" alt="ImgCapa" class="img-responsive" (click)="anexoFoto.click()">
+        </div>
+        <br/>
+        <div [class]="escondeBotaoEditar">
+          <label class="btn btn-primary btn-file">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar Imagem
+            <input type="file" style="display: none;" #anexoFoto (change)="onFileChange($event)" formControlName="capa" name="capa" [imageToDataUrl]="options"
+              (imageSelected)="selected($event)" accept=".png, .jpg, .jpeg" [disabled]="apenasVisualizacao">
+          </label>
+        </div>
+        <!-- <div class="error" *ngIf="!livroDigitalGroup.controls['capa'].valid">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" *ngIf="livroDigitalGroup.controls['capa'].hasError('capa')">Capa é obrigatório!</span>
+        </div> -->
+      </div>
+
+      <div class="col-md-7">
+        <div class="panel-default">
+          <div class="panel-heading">
+            <h3 class="fonte-color">Informações</h3>
+          </div>
+          <div class="panel-body">
+
+            <div class="row animated">
+
+              <div class="form-group col-sm-6">
+                <label class="control-label fonte-color" for="titulo">Título<span id='spanObgt2' class="color-red"> *</span></label>
+                <input type="text" class="form-control" placeholder="Título" formControlName="titulo" [formControl]="livroDigitalGroup.controls['titulo']"
+                  maxlength="=200">
+                <div class="error" *ngIf="!livroDigitalGroup.controls['titulo'].valid && livroDigitalGroup.controls['titulo'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['titulo'].hasError('required')">Título é obrigatório!</span>
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['titulo'].hasError('minlength')">No mínimo 10 caracteres!</span>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-6">
+                <label class="control-label fonte-color" for="subtitulo">Subtítulo<span id='spanObgt3' class="color-red"> *</span></label>
+                <input type="text" class="form-control" formControlName="subtitulo" placeholder="Subtítulo" name="subtitulo" minlength="10"
+                  maxlength="200">
+                <div class="error" *ngIf="!livroDigitalGroup.controls['subtitulo'].valid && livroDigitalGroup.controls['subtitulo'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['subtitulo'].hasError('required')">Título é obrigatório!</span>
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['subtitulo'].hasError('minlength')">No mínimo 10 caracteres!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row animated">
+              <div class="form-group col-sm-6">
+                <label class="control-label fonte-color" for="isbnDigital">ISBN - Digital<span id='spanObgt4' class="color-red"> *</span></label>
+                <input type="text" appSomenteNumero class="form-control" formControlName="isbnDigital" placeholder="ISBN - Digital" name="isbnDigital"
+                  minlength="13" maxlength="13">
+                <div class="error" *ngIf="!livroDigitalGroup.controls['isbnDigital'].valid && livroDigitalGroup.controls['isbnDigital'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['isbnDigital'].hasError('required')">ISBN - Digital é obrigatório!</span>
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['isbnDigital'].hasError('minlength')">No mínimo 13 caracteres!</span>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-6">
+                <label class="control-label fonte-color" for="tipoLivro">Tipo Livro<span id='spanObgt5' class="color-red"> *</span></label>
+                <select class="form-control" formControlName="idTipoLivro" name="idTipoLivro">
+                  <option value="">Selecione</option>
+                  <option *ngFor="let value of tiposLivro" value={{value.id}}>{{value.descricao}}</option>
+                </select>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['idTipoLivro'].valid && livroDigitalGroup.controls['idTipoLivro'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['idTipoLivro'].hasError('required')">Tipo Livro é obrigatório!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row animated">
+              <div class="form-group col-sm-12">
+                <label class="control-label fonte-color" for="colecaoSerie">Coleção/Série<span id='spanObgt6' class="color-red"> *</span></label>
+                <textarea class="form-control" rows="1" formControlName="colecaoSerie" placeholder="Coleção/Série"
+                  name="colecaoSerie" minlength="10" maxlength="200" style="margin: 0px; height: 100px; width: 948px; max-width: 100%; min-width: 100%; max-height: 100%;">
+                </textarea>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['colecaoSerie'].valid && livroDigitalGroup.controls['colecaoSerie'].touched">
+                    <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['colecaoSerie'].hasError('required')">Coleção/Série é obrigatório!</span>
+                    <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['colecaoSerie'].hasError('minlength')">No mínimo 10 caracteres!</span>
+                  </div>
+              </div>
+            </div>
+
+            <div class="row animated">
+              <div class="form-group col-sm-2">
+                <label class="control-label fonte-color" for="ano">Ano<span id='spanObgt7' class="color-red"> *</span></label>
+                <input type="text" appSomenteNumero class="form-control" formControlName="ano" placeholder="Ano" name="ano" minlength="4"
+                  maxlength="4">
+                <div class="error" *ngIf="!livroDigitalGroup.controls['ano'].valid && livroDigitalGroup.controls['ano'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['ano'].hasError('required')">Ano é obrigatório!</span>
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['ano'].hasError('minlength')">No mínimo 4 caracteres!</span>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-2">
+                <label class="control-label fonte-color" for="edicao">Edição<span id='spanObgt8' class="color-red"> *</span></label>
+                <input type="text" appSomenteNumero class="form-control" formControlName="edicao" placeholder="Edição" name="edicao" minlength="1"
+                  maxlength="2">
+                <div class="error" *ngIf="!livroDigitalGroup.controls['edicao'].valid && livroDigitalGroup.controls['edicao'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['edicao'].hasError('required')">Edição é obrigatório!</span>
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['edicao'].hasError('minlength')">No mínimo 1 caracteres!</span>
+                </div>
+              </div>
+              <div class="ajuste-dropdown form-group col-sm-4">
+                <label class="control-label fonte-color" for="autoria">Autoria<span id='spanObgt9' class="color-red"> *</span></label>
+                <ng2-completer #autoria inputClass="form-control" name="autoria" formControlName="autoria" placeholder="Autoria" textNoResults="Nenhum resultado!"
+                  textSearching="Pesquisando.." [datasource]="professoresMoipService" minSearchLength="3">
+                </ng2-completer>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['autoria'].valid && livroDigitalGroup.controls['autoria'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['autoria'].hasError('required')">Autoria é obrigatório!</span>
+                </div>
+              </div>
+              <div class="form-group col-sm-4">
+                <label class="control-label fonte-color" for="idEditora">Editora<span id='spanObgt10' class="color-red"> *</span></label>
+                <div class="input-group">
+                  <select class="form-control" formControlName="idEditora" name="idEditora">
+                    <option value="" selected>Selecione</option>
+                    <option *ngFor="let value of editoras" value={{value.id}}>{{value.descricao}}</option>
+                  </select>
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-md" (click)="abriCadastroEditora()" [disabled]="apenasVisualizacao">
+                      <span class="fas fa-plus" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                </div>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['idEditora'].valid && livroDigitalGroup.controls['idEditora'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['idEditora'].hasError('required')">Editora é obrigatório!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row animated">
+              <div class="form-group col-sm-2">
+                <label class="control-label fonte-color" for="volume">Volume<span id='spanObgt11' class="color-red"> *</span></label>
+                <input type="text" appSomenteNumero class="form-control" formControlName="volume" placeholder="Volume" name="volume" minlength="1"
+                  maxlength="2">
+                <div class="error" *ngIf="!livroDigitalGroup.controls['volume'].valid && livroDigitalGroup.controls['volume'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['volume'].hasError('required')">Volume é obrigatório!</span>
+                </div>
+              </div>
+              <div class="form-group col-sm-2">
+                <label class="control-label fonte-color" for="paginas">Páginas<span id='spanObgt12' class="color-red"> *</span></label>
+                <input type="text" appSomenteNumero class="form-control" formControlName="paginas" placeholder="Páginas" name="paginas" minlength="1"
+                  maxlength="6">
+                <div class="error" *ngIf="!livroDigitalGroup.controls['paginas'].valid && livroDigitalGroup.controls['paginas'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['paginas'].hasError('required')">Páginas é obrigatório!</span>
+                </div>
+              </div>
+              <div class="form-group col-sm-4">
+                <label class="control-label fonte-color" for="idIdioma">Idioma<span id='spanObgt13' class="color-red"> *</span></label>
+                <select class="form-control" formControlName="idIdioma" name="idIdioma">
+                  <option value="">Selecione</option>
+                  <option *ngFor="let value of idiomas" value={{value.id}}>{{value.descricao}}</option>
+                </select>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['idIdioma'].valid && livroDigitalGroup.controls['idIdioma'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['idIdioma'].hasError('required')">Idioma é obrigatório!</span>
+                </div>
+              </div>
+              <div class="form-group col-sm-4">
+                <label class="control-label fonte-color" for="idPais">País<span id='spanObgt14' class="color-red"> *</span></label>
+                <select class="form-control" formControlName="idPais" name="idPais">
+                  <option value="">Selecione</option>
+                  <option *ngFor="let value of paises" value={{value.id}}>{{value.descricao}}</option>
+                </select>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['idPais'].valid && livroDigitalGroup.controls['idPais'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['idPais'].hasError('required')">País é obrigatório!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row animated">
+              <div class="form-group col-sm-6">
+                <label class="control-label fonte-color" for="idCategoria">Categoria<span id='spanObgt15' class="color-red"> *</span></label> &nbsp;&nbsp;
+                <div class="input-group">
+                  <ng2-completer #categoria inputClass="form-control" formControlName="idCategoria" name="idCategoria" placeholder="Categoria"
+                    textNoResults="Nenhum resultado!" textSearching="Pesquisando.." [dataService]="cateService" minSearchLength="0"
+                    id="idCategoria" (selected)="buscaSubCategoria(categoria.value)">
+                  </ng2-completer>
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-md" (click)="abriCadastroCategoria()" [disabled]="apenasVisualizacao">
+                      <span class="fas fa-plus" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                </div>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['idCategoria'].valid && livroDigitalGroup.controls['idCategoria'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['idCategoria'].hasError('required')">Categoria é obrigatório!</span>
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <label class="control-label fonte-color" for="idSubCategoria">Subcategoria<span id='spanObgt16' class="color-red"> *</span></label> &nbsp;&nbsp;
+                <div class="input-group">
+                  <ng2-completer #subCategoria inputClass="form-control input-group" formControlName="idSubCategoria" name="idSubCategoria"
+                    placeholder="Subcategoria" textNoResults="Nenhum resultado!" textSearching="Pesquisando.." [datasource]="subcateService"
+                    minSearchLength="1" id="idSubCategoria" [disableInput]="this.desabilitaSubCategoria" (selected)="selecionarSubCategoria(subCategoria.value)">
+                  </ng2-completer>
+                  <div class="input-group-btn">
+                    <button type="button" class="btn btn-primary btn-md" (click)="abriCadastroSubCategoria()" [disabled]="apenasVisualizacao">
+                      <span class="fas fa-plus" aria-hidden="true"></span>
+                    </button>
+                  </div>
+                </div>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['idSubCategoria'].valid && livroDigitalGroup.controls['idSubCategoria'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['idSubCategoria'].hasError('required')">Subcategoria é obrigatório!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row animated">
+              <div class="form-group col-sm-12">
+                <label class="control-label fonte-color" for="sinopse">Sinopse<span id='spanObgt17' class="color-red"> *</span></label>
+                <textarea class="form-control" rows="7" formControlName="sinopse" placeholder="Sinopse" name="sinopse" minlength="1" maxlength="2000"
+                  style="margin: 0px; height: 120px; width: 948px; max-width: 100%; min-width: 100%; max-height: 100%;"></textarea>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['sinopse'].valid && livroDigitalGroup.controls['sinopse'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['sinopse'].hasError('required')">Sinopse é obrigatório!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row animated">
+              <div class="form-group col-sm-12">
+                <label class="control-label fonte-color" for="complemento">Complemento/Informações Adicionais<span id='spanObgt18' class="color-red"> *</span></label>
+                <textarea class="form-control" rows="7" formControlName="complemento" placeholder="Complemento/Informações Adicionais" name="complemento"
+                  minlength="1" maxlength="2000" style="margin: 0px; height: 120px; width: 948px; max-width: 100%; min-width: 100%; max-height: 100%;"></textarea>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['complemento'].valid && livroDigitalGroup.controls['complemento'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['complemento'].hasError('required')">Complemento/Informações Adicionais é obrigatório!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row animated">
+              <div class="form-group col-sm-12">
+                <label class="control-label fonte-color" for="observacoes">Observações<span id='spanObgt19' class="color-red"> *</span></label>
+                <textarea class="form-control" rows="7" formControlName="observacoes" placeholder="Observações" name="observacoes" minlength="1"
+                  maxlength="2000" style="margin: 0px; height: 120px; width: 948px; max-width: 100%; min-width: 100%; max-height: 100%;"></textarea>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['observacoes'].valid && livroDigitalGroup.controls['observacoes'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['observacoes'].hasError('required')">Observações é obrigatório!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row animated">
+              <div class="form-group col-sm-12">
+                <label class="control-label fonte-color" for="tags">Tags<span id='spanObgt20' class="color-red"> *</span></label>
+                <div id="divBallonTag">
+                  <tag-input name="tags" formControlName="tags" [(disable)]="apenasVisualizacao" [errorMessages]="errorMessages" [validators]="validators">
+                    <tag-input-dropdown [autocompleteItems]='autoTags'></tag-input-dropdown>
+                  </tag-input>
+                </div>
+                <div class="error" *ngIf="!livroDigitalGroup.controls['tags'].valid && livroDigitalGroup.controls['tags'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['tags'].hasError('required')">Tag é obrigatório!</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row animated">
+              <div class="form-group col-sm-5">
+                <label class="control-label fonte-color" for="nomeResponsavel">Nome do Responsável<span id='spanObgt21' class="color-red"> *</span></label>
+                <input type="text" #nomeResponsavel class="form-control" formControlName="nomeResponsavel" placeholder="Nome do Responsável"
+                  name="nomeResponsavel" minlength="1" maxlength="200">
+                <div class="error" *ngIf="!livroDigitalGroup.controls['nomeResponsavel'].valid && livroDigitalGroup.controls['nomeResponsavel'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['nomeResponsavel'].hasError('required')">Nome do reponsável é obrigatório!</span>
+                </div>
+              </div>
+
+              <div class="form-group col-sm-7">
+                <div class="col-sm-12">
+                  <label class="control-label fonte-color" for="funcao">Função<span id='spanObgt22' class="color-red"> *</span></label>
+                </div>
+                <div class="ajuste-dropdown col-sm-10">
+                  <ng2-completer #funcao inputClass="form-control" formControlName="funcao" name="funcao" placeholder="Função" textNoResults="Nenhum resultado!"
+                    textSearching="Pesquisando.." [dataService]="funcoesService" minSearchLength="0" id="funcao"></ng2-completer>
+                  <div class="error" *ngIf="!livroDigitalGroup.controls['funcao'].valid && livroDigitalGroup.controls['funcao'].touched">
+                    <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['funcao'].hasError('required')">Função é obrigatória!</span>
+                  </div>
+                </div>
+                <div class="col-sm-1">
+                  <button type="button" class="btn btn-primary btn-md" (click)="adicionarMembrosEquipeTecnica(nomeResponsavel.value, funcao.value);"
+                    [disabled]="apenasVisualizacao" data-balloon="Adicionar membro" data-balloon-pos="up">
+                    <span class="fas fa-user-plus" aria-hidden="true"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row animated">
+              <div class="col-sm-12">
+                <label class="control-label fonte-color">Nomes dos Responsáveis e suas Funções</label>
+
+                <ul>
+                  <li *ngFor="let value of membrosAdd">
+                    <h4>
+                      <span class="label label-info">
+                        {{value.nomeResponsavel}} - {{value.funcao.descricao}}
+                      </span>&nbsp;
+                      <a *ngIf="!apenasVisualizacao" class="cursor-pointer color-red" (click)="retiraMembroLista(value.nomeResponsavel, value.funcao.descricao)">
+                        <span class="far fa-times-circle" aria-hidden="true"></span>
+                      </a>
+                    </h4>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <br/>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="fonte-color">Informações complementares</h3>
+          </div>
+          <div class="panel-body">
+
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label class="control-label fonte-color" for="isbnImpresso">ISBN - Impresso</label>
+                <input type="text" appSomenteNumero class="form-control" formControlName="isbnImpresso" placeholder="ISBN - Impresso" name="isbnImpresso"
+                  minlength="13" maxlength="13">
+                <div class="error" *ngIf="!livroDigitalGroup.controls['isbnImpresso'].valid && livroDigitalGroup.controls['isbnImpresso'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['isbnImpresso'].hasError('minlength')">No mínimo 13 caracteres!</span>
+                </div>
+              </div>
+              <div class="form-group col-sm-4">
+                <label class="control-label fonte-color" for="codAxLivroImpresso">Cód. AX Livro</label>
+                <input type="text" appSomenteNumero class="form-control" formControlName="codAxLivroImpresso" placeholder="Cód. AX Livro"
+                  name="codAxLivroImpresso" minlength="4" maxlength="8">
+                <div class="error" *ngIf="!livroDigitalGroup.controls['codAxLivroImpresso'].valid && livroDigitalGroup.controls['codAxLivroImpresso'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['codAxLivroImpresso'].hasError('minlength')">No mínimo 4 caracteres!</span>
+                </div>
+              </div>
+              <div class="form-group col-sm-4">
+                <label class="control-label fonte-color" for="codAxLivroDigital">Cód. AX Livro Digital</label>
+                <input type="text" appSomenteNumero class="form-control" formControlName="codAxLivroDigital" placeholder="Cód. AX Livro Digital"
+                  name="codAxLivroDigital" minlength="4" maxlength="8">
+                <div class="error" *ngIf="!livroDigitalGroup.controls['codAxLivroDigital'].valid && livroDigitalGroup.controls['codAxLivroDigital'].touched">
+                  <span aria-hidden="true" *ngIf="livroDigitalGroup.controls['codAxLivroDigital'].hasError('minlength')">No mínimo 4 caracteres!</span>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label class="control-label fonte-color" for="cod5Elemento">Código 5º. Elemento</label>
+                <input type="text" appSomenteNumero class="form-control" formControlName="cod5Elemento" placeholder="Código 5º. Elemento"
+                  name="cod5Elemento" minlength="1" maxlength="10">
+              </div>
+              <div class="form-group col-sm-4">
+                <label class="control-label fonte-color" for="precoImpresso">Preço livro impresso</label>
+                <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" class="form-control" formControlName="precoImpresso" placeholder="Preço livro impresso" name="precoImpresso"
+                  maxlength="15">
+              </div>
+              <div class="form-group col-sm-4">
+                <label class="control-label fonte-color" for="precoDigital">Preço livro digital</label>
+                <input type="text" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" class="form-control" formControlName="precoDigital" placeholder="Preço livro digital" name="precoDigital"
+                  maxlength="15">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-12">
+                <label class="control-label fonte-color" for="linkLivroImpresso">Link livro impresso</label>
+                <input class="form-control" type="text" maxlength="1000" formControlName="linkLivroImpresso" placeholder="Link livro E-Commerce" name="linkLivroImpresso">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-12">
+                <label class="control-label fonte-color" for="linkLivroDigital">Link livro digital</label>
+                <input class="form-control" type="text" maxlength="1000" formControlName="linkLivroDigital" placeholder="Link livro digital" name="linkLivroDigital">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-12">
+                <label class="control-label fonte-color" for="texto4Capa">Texto de quarta capa</label>
+                <textarea class="form-control" rows="3" formControlName="texto4Capa" placeholder="Texto de quarta capa" name="texto4Capa"
+                  style="margin: 0px; height: 120px; width: 948px; max-width: 100%; min-width: 100%; max-height: 100%;"></textarea>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-12">
+                <label class="control-label fonte-color" for="sumario">Sumário completo</label>
+                <textarea class="form-control" rows="7" formControlName="sumario" placeholder="Sumário completo" name="sumario" style="margin:
+                0px; height: 120px; width: 948px; max-width: 100%; min-width: 100%; max-height: 100%;"></textarea>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-12">
+                <label class="control-label fonte-color" for="sumarioReduzido">Sumário reduzido</label>
+                <textarea class="form-control" rows="5" formControlName="sumarioReduzido" placeholder="Sumário reduzido" name="sumarioReduzido"
+                  maxlength="2000" style="margin: 0px; height: 120px; width: 948px; max-width: 100%; min-width: 100%; max-height: 100%;"></textarea>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-12" id='spanObgt23'>
+                <label class="control-label fonte-color color-red" style="font-size: smaller;">* campos obrigatórios</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <br/>
+
+        <div class="row">
+          <div class="col-md-12 text-right">
+            <button class="btn btn-default .navbar-right" type="button" (click)="voltarListagemLivros()">Voltar</button>
+            <button class="btn btn-default .navbar-right" type="button" (click)="reset()" [disabled]="apenasVisualizacao">Limpar campos</button>
+            <button type="reset" id="buttonReset" hidden="true"></button>
+            <button class="btn btn-primary .navbar-right" type="submit" [disabled]="!livroDigitalGroup.valid ||apenasVisualizacao">Cadastrar</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-sm-offset-1"></div>
+    </form>
+  </div>
+</div>
+
+<app-cadastro-categoria #cadastroCategoria (categoriaUpdated)="atualizaCategoria()"></app-cadastro-categoria>
+<app-cadastro-sub-categoria #cadastroSubCategoria (subCategoriaUpdated)="atualizaSubCategoria()"></app-cadastro-sub-categoria>
+<app-cadastro-editora #cadastroEditora (editoraUpdated)="atualizaEditora()"></app-cadastro-editora>

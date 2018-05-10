@@ -1,0 +1,47 @@
+<nav class="navbar navbar-default navbar-cronograma navbar-fixed-top">
+    <div class="col-xs-2 col-sm-3 col-md-5 col-lg-12">
+        <div class="navbar-header">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <a href="#">
+                    <img class="navbar-brand navbar-logo" src="../assets/imagem/logo.png" alt="" />
+                </a>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{linkPortalAutoria}}">Plataforma Autoral</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">Cadastro de livros</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="{{ urlTransposicao }}">Transposição</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right margin-right" style="margin-right: 0.1em;">
+                <li>
+                    <div class="col-xs-6 col-sm-6 col-md-8 col-lg-8">
+                        <a href="{{URL_inicialmoip}}">
+                            <img class="navbar-brand margin-top" src="../assets/imagem/logo-moip.png" alt="" />
+                        </a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" class="nav-user-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{usuarioAvatar}}" class="img-responsive nav-user-img img-circle pull-left img-user" width="52" (click)="abriVisualizacaoCapa()"/> {{usuario.NOME}}
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-user-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" (click)="logout()">
+                        <i class="fas fa-sign-out-alt fa-lg"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<app-visualizar-capa #visualizarCapa></app-visualizar-capa>

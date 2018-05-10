@@ -1,0 +1,38 @@
+<div class="container">
+    <bs-modal #modal [keyboard]="false" [backdrop]="'static'">
+        <bs-modal-header [showDismiss]="true">
+            <h4 class="modal-title">Cadastro de editora</h4>
+        </bs-modal-header>
+        <bs-modal-body>
+            <div class="tab-content">
+                <form class="form-horizontal" cadastroEditora [formGroup]="livroDigitalGroupEditora">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label class="control-label" for="editora">Descrição
+                                <span id='spanObgt1' class="color-red"> *</span>
+                            </label>
+                            <input type="text" class="form-control" formControlName="descricao" [formControl]="livroDigitalGroupEditora.controls['descricao']"
+                                placeholder="Adicione uma Editora" id="editora" name="editora" maxlength="100">
+                            <div class="error" *ngIf="!livroDigitalGroupEditora.controls['descricao'].valid && livroDigitalGroupEditora.controls['descricao'].touched">
+                                <span aria-hidden="true" *ngIf="livroDigitalGroupEditora.controls['descricao'].hasError('required')">Descrição é obrigatório!</span>
+                                <span aria-hidden="true" *ngIf="livroDigitalGroupEditora.controls['descricao'].hasError('minlength')">No mínimo 4 caracteres!</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </bs-modal-body>
+        <bs-modal-footer>
+            <div class="row">
+                <div class="col-sm-12 text-left" id='spanObgt2'>
+                    <label class="control-label fonte-color color-red" style="font-size: smaller;">* campos obrigatórios</label>
+                </div>
+                <br/>
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-default .navbar-right" type="button" (click)="fecharModal()">Fechar</button>
+                    <button class="btn btn-primary .navbar-right" type="button" (click)="Cadastrar()" [disabled]="!livroDigitalGroupEditora.valid">Salvar</button>
+                </div>
+            </div>
+        </bs-modal-footer>
+    </bs-modal>
+</div>

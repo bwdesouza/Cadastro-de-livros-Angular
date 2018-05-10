@@ -1,0 +1,40 @@
+
+<div class="container">
+    <bs-modal #modal [keyboard]="false" [backdrop]="'static'">
+        <bs-modal-header [showDismiss]="true">
+            <h4 class="modal-title">Livro Transposto</h4>
+        </bs-modal-header>
+        <bs-modal-body>
+            <div class="tab-content">
+                <form class="form-horizontal" vinculoLivroTransposto [formGroup]="livroDigitalGroupVinculoTransposto">
+                    <div class="form-group">
+                        <div class="ajuste-dropdown col-sm-12">
+                            <label class="control-label" for="livroTransposto">Escolha um livro
+                                <span id='spanObgt1' class="color-red"> *</span>
+                            </label>
+                            <ng2-completer inputClass="form-control" name="lvtransposto" formControlName="lvtransposto" placeholder="Digite o nome do livro que deseja selecionar.."
+                                [formControl]="livroDigitalGroupVinculoTransposto.controls['lvtransposto']" textNoResults="Nenhum resultado!" textSearching="Pesquisando.."
+                                [datasource]="LivroTranspostoDS" id="lvtransposto" minSearchLength="1" (selected)="preencherlivrotransposto($event)">
+                            </ng2-completer>
+                            <div class="error" *ngIf="!livroDigitalGroupVinculoTransposto.controls['lvtransposto'].valid && livroDigitalGroupVinculoTransposto.controls['lvtransposto'].touched">
+                                <span aria-hidden="true" *ngIf="livroDigitalGroupVinculoTransposto.controls['lvtransposto'].hasError('required')">Livro é obrigatório!</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </bs-modal-body>
+        <bs-modal-footer>
+            <div class="row">
+                <div class="col-sm-12 text-left" id='spanObgt2'>
+                    <label class="control-label fonte-color color-red" style="font-size: smaller;">* campos obrigatórios</label>
+                </div>
+                <br>
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-default .navbar-right" type="button" (click)="fecharModal()">Fechar</button>
+                    <button class="btn btn-primary .navbar-right" type="button" (click)="Cadastrar()" [disabled]="!livroDigitalGroupVinculoTransposto.valid">Salvar</button>
+                </div>
+            </div>
+        </bs-modal-footer>
+    </bs-modal>
+</div>

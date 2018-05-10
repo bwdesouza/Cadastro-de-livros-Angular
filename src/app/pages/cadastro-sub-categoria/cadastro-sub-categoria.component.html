@@ -1,0 +1,50 @@
+<div class="container">
+    <bs-modal #modal [keyboard]="false" [backdrop]="'static'">
+        <bs-modal-header [showDismiss]="true">
+            <h4 class="modal-title">Cadastro de subcategoria</h4>
+        </bs-modal-header>
+        <bs-modal-body>
+            <div class="tab-content">
+                <form class="form-horizontal" cadastroSubCategoria [formGroup]="livroDigitalGroupSubCategoria">
+                    <div class="form-group">
+                        <div class="ajuste-dropdown col-sm-12">
+                            <label class="control-label" for="categoria">Categoria
+                                <span id='spanObgt1' class="color-red"> *</span>
+                            </label>
+                            <ng2-completer #categoria inputClass="form-control" name="categoria" formControlName="categoria" placeholder="Selecione uma Categoria"
+                                [formControl]="livroDigitalGroupSubCategoria.controls['categoria']" textNoResults="Nenhum resultado!" textSearching="Pesquisando.."
+                                [datasource]="categoriaDS" id="categoria" minSearchLength="1" (selected)="preenchercategoria($event)">
+                            </ng2-completer>
+                            <div class="error" *ngIf="!livroDigitalGroupSubCategoria.controls['categoria'].valid && livroDigitalGroupSubCategoria.controls['categoria'].touched">
+                                <span aria-hidden="true" *ngIf="livroDigitalGroupSubCategoria.controls['categoria'].hasError('required')">Categoria é obrigatório!</span>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="col-sm-12">
+                            <label class="control-label" for="subcategoria">Subcategoria</label>
+                            <input type="text" class="form-control" formControlName="descricao" [formControl]="livroDigitalGroupSubCategoria.controls['descricao']"
+                                placeholder="Adicione uma subcategoria" id="subcategoria" name="subcategoria" maxlength="100">
+                            <div class="error" *ngIf="!livroDigitalGroupSubCategoria.controls['descricao'].valid && livroDigitalGroupSubCategoria.controls['descricao'].touched">
+                                <span aria-hidden="true" *ngIf="livroDigitalGroupSubCategoria.controls['descricao'].hasError('required')">Descrição é obrigatório!</span>
+                                <span aria-hidden="true" *ngIf="livroDigitalGroupSubCategoria.controls['descricao'].hasError('minlength')">No mínimo 4 caracteres!</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </bs-modal-body>
+        <bs-modal-footer>
+            <div class="row">
+                <div class="col-sm-12 text-left" id='spanObgt2'>
+                    <label class="control-label fonte-color color-red" style="font-size: smaller;">* campos obrigatórios</label>
+                </div>
+                <br/>
+                <div class="col-sm-12 text-right">
+                    <button class="btn btn-default .navbar-right" type="button" (click)="fecharModal()">Fechar</button>
+                    <button class="btn btn-primary .navbar-right" type="button" (click)="Cadastrar()" [disabled]="!livroDigitalGroupSubCategoria.valid">Salvar</button>
+                </div>
+            </div>
+        </bs-modal-footer>
+    </bs-modal>
+</div>

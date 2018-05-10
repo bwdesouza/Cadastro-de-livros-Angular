@@ -1,0 +1,17 @@
+<div class="container">
+    
+  <bs-modal #modal [keyboard]="true" [backdrop]="'static'" [size]="'sm'">
+      <bs-modal-header [showDismiss]="true">
+          <h4 class="modal-title fonte-color">Visualizar imagem</h4>
+      </bs-modal-header>
+      <bs-modal-body>
+          <div class="tab-content">
+            <img [src]="imagem" alt="ImgCapa" class="img-responsive">
+          </div>
+      </bs-modal-body>
+      <bs-modal-footer>
+        <button type="button" class="btn btn-default" (click)="modal.close()">Fechar</button>
+      </bs-modal-footer>
+  </bs-modal>
+
+</div>

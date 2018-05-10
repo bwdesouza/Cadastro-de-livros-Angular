@@ -1,0 +1,103 @@
+
+<div class="animated bounceInRight">
+  <app-filtro-livros #filtros (filtroChange)="filtrarLivros($event)" 
+  (filtroAlfabetoChange)="filtrarLivrosAlfabeto($event)" 
+  (abrirEdicao)="abrirEdicaoLivro($event)"></app-filtro-livros>
+</div>
+<div class="animated bounceInDown">
+  <button type="button" class="btn btn-primary" (click)="abrirEdicaoLivro(0)">
+    <span class="fas fa-book" aria-hidden="true"></span> Novo Livro
+  </button>
+</div>
+<br/>
+<div class="panel panel-default animated bounceInLeft">
+  <div class="panel-heading text-center">
+    <label>Livros</label>
+  </div>
+  <div class="panel-body">
+    <div class="table table-overflow fonte-color">
+      <table class="table table-striped col-sm-12">
+        <thead>
+          <tr>
+            <th class="text-center">Capa <small>(clique)</small></th>
+            <th class="">Título da Obra</th>
+            <th class="">Categoria</th>
+            <th class="text-center">ISBN Digital</th>
+            <th class="text-center">Edição</th>
+            <th class="text-center">Ano</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="livros.length == 0" class="text-center">
+            <td colspan="9">Não existem livros para serem listados.</td>
+          </tr>
+          <tr *ngFor="let item of livros | paginate: { id: 'pagination',
+                                            itemsPerPage: pageSize,
+                                            currentPage: p2 }">
+            <td class="col-sm-1 text-center">
+              <img [src]="carregaImagem(item.capaString)" class="img-thumber cursor-pointer" 
+              alt="Cinque Terre" width="70" height="100" (click)="abriVisualizacaoCapa(item.capaString)">
+            </td>
+            <td class="col-sm-4">{{item.titulo}}</td>
+            <td class="col-sm-1">{{item.categoria.descricao}}</td>
+            <td class="col-sm-1 text-center">{{item.isbnDigital}}</td>
+            <td class="col-sm-1 text-center">{{item.edicao}}</td>
+            <td class="col-sm-1 text-center">{{item.ano}}</td>
+            <td class="col-sm-1 text-center"><span [class]="carregarClasseStatus(item.statusProducao?.id)">{{item.statusProducao == null? 'Novo' : item.statusProducao.descricao}}</span></td>
+            <td class="col-sm-3 text-center">
+              <button type="button" class="btn btn-default" (click)="abrirVisualizacaoLivro(item.id)" data-balloon="Visualizar livro" data-balloon-pos="up">
+                <span class="fas fa-eye" aria-hidden="true"></span>
+              </button>
+              <button *ngIf="permissaoVisualizarBotao() && (item.statusProducao == null || item.statusProducao?.id == 1)"
+              type="button" class="btn btn-default" data-balloon="Vincular livro transposto" data-balloon-pos="up"
+              (click)="abriLivroTransposto(item.id)">
+                <span class="fas fa-link" aria-hidden="true"></span>
+              </button>
+              <button *ngIf="permissaoPreview(item.id)" type="button"
+                class="btn btn-default" (click)="exibirPreview(item.id)" data-balloon="Pré-visualização Livro Transposto" data-balloon-pos="up">
+                <span class="fab fa-leanpub" aria-hidden="true"></span>
+              </button>
+              <button *ngIf="permissaoVisualizarBotao()" type="button" class="btn btn-success" (click)="abrirEdicaoLivro(item.id)" data-balloon="Editar livro"
+                data-balloon-pos="down">
+                <span class="fas fa-edit" aria-hidden="true"></span>
+              </button>
+              <button *ngIf="permissaoVisualizarBotao() && (item.statusProducao == null || item.statusProducao?.id == 1)" type="button"
+                class="btn btn-danger" (click)="abrirExclusaoLivro(item.id)" data-balloon="Excluir livro" data-balloon-pos="down">
+                <span class="far fa-trash-alt" aria-hidden="true"></span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <pagination-template #p="paginationApi" id="pagination" (pageChange)="p2 = $event">
+    <div class="col-md-offset-5 col-md-2">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <div class="pagination-previous input-group-btn">
+            <button class="btn btn-default" type="button" (click)="p.previous(); valueInput.value=''; " [disabled]="p.isFirstPage()">
+              < </button>
+          </div>
+        </span>
+
+        <input type="text" class="form-control text-center" appSomenteNumero #valueInput (input)="p.setCurrent(valueInput.value)"
+          maxlength="4" placeholder="{{ p.getCurrent() }} / {{ p.getLastPage() }}">
+
+        <span class="input-group-btn">
+          <div class="pagination-next input-group-btn">
+            <button class="btn btn-default" type="button" (click)="p.next(); valueInput.value=''; " [disabled]="p.isLastPage()"> > </button>
+          </div>
+        </span>
+      </div>
+    </div>
+  </pagination-template>
+</div>
+
+<app-visualizar-capa #visualizarCapa></app-visualizar-capa>
+<app-livro-transposto #vinculoLivroTransposto></app-livro-transposto>

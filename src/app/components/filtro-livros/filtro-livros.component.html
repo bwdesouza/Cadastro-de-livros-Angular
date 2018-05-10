@@ -1,0 +1,50 @@
+
+<div class="panel panel-default">
+  <div class="panel-heading text-center">
+    <label>Filtros</label>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-12">
+      <div class="col-sm-offset-1 input-group col-md-10">
+        <span class="input-group-addon">
+          <i class="fas fa-search"></i>
+        </span>
+        <input type="search" class="form-control" #filtro placeholder="{{ inputPlaceHolder }}" (keyup)="filtrarLivros(filtro.value)">
+      </div>
+      <br/>
+    </div>
+    <div class="col-md-12 text-center">
+      <div class="row alfabeto">
+        <span class="btn" (click)="filtrarLivrosAlfabeto('clear')" data-balloon="Recarregar" data-balloon-pos="up">
+          <i class="fas fa-sync fa-2x"></i>
+        </span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; A&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; B&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; C&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; D&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; E&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; F&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; G&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; H&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; I&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; J&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; K&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; L&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; M&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; N&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; O&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; P&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; Q&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; R&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; S&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; T&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; U&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; V&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; W&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; X&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; Y&nbsp;</h2></span>
+        <span (click)="filtrarLivrosAlfabeto($event)"><h2> &nbsp; Z&nbsp;</h2></span>
+      </div>
+    </div>
+  </div>
+</div>

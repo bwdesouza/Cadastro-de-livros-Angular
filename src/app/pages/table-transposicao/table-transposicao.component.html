@@ -1,0 +1,74 @@
+<div style="text-align:center">
+    <img width="300" alt="Angular Logo" src="../assets/imagem/logo.png">
+  </div>
+<div class="animated bounceInRight">
+    <app-filtro-livros #filtros (filtroChange)="filtrarLivros($event)" 
+    (filtroAlfabetoChange)="filtrarLivrosAlfabeto($event)"     
+    (abrirEdicao)="abrirEdicaoLivro($event)"></app-filtro-livros>
+  </div>
+  <div class="animated bounceInDown">
+    <button type="button" class="btn btn-primary" (click)="iniciarTransposicao()">
+      <span class="fas fa-cogs" aria-hidden="true"></span> Iniciar Serviço de Transposição
+    </button>
+  </div>
+  <br/>
+  <div class="panel panel-default animated bounceInLeft">
+    <div class="panel-heading text-center">
+      <label>Livros Transpostos</label>
+    </div>
+    <div class="panel-body">
+      <div class="table table-overflow fonte-color">
+        <table class="table table-striped col-sm-12">
+          <thead>
+            <tr>             
+              <th class="">Data de Criação</th>
+              <th class="">Livro</th>
+              <th class="">Pasta de Imagens</th>              
+              <th class="text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="livros.length == 0" class="text-center">
+              <td colspan="9">Não existem livros para listagem.</td>
+            </tr>
+            <tr *ngFor="let item of livros | paginate: { id: 'pagination',
+                                              itemsPerPage: pageSize,
+                                              currentPage: p2 }">              
+              <td class="col-sm-1">{{ item.dataCriacao }}</td>
+              <td class="col-sm-4">{{item.nome}}</td>
+              <td class="col-sm-1">{{item.nomePastaImagem}}</td>                            
+              <td class="col-sm-1 text-center">
+                <button type="button" class="btn btn-default" (click)="abrirVisualizacaoLivro(item.id)" data-balloon="Visualizar livro" data-balloon-pos="up">
+                  <span class="fas fa-eye" aria-hidden="true"></span>
+                </button>              
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <pagination-template #p="paginationApi" id="pagination" (pageChange)="p2 = $event">
+      <div class="col-md-offset-5 col-md-2">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <div class="pagination-previous input-group-btn">
+              <button class="btn btn-default" type="button" (click)="p.previous(); valueInput.value=''; " [disabled]="p.isFirstPage()">
+                < </button>
+            </div>
+          </span>
+  
+          <input type="text" class="form-control text-center" appSomenteNumero #valueInput (input)="p.setCurrent(valueInput.value)"
+            maxlength="4" placeholder="{{ p.getCurrent() }} / {{ p.getLastPage() }}">
+  
+          <span class="input-group-btn">
+            <div class="pagination-next input-group-btn">
+              <button class="btn btn-default" type="button" (click)="p.next(); valueInput.value=''; " [disabled]="p.isLastPage()"> > </button>
+            </div>
+          </span>
+        </div>
+      </div>
+    </pagination-template>
+  </div>    
